@@ -4,7 +4,7 @@ import {Ionicons} from "@expo/vector-icons";
 
 const Header = ({navigation}) => {
 
-    const [token, setToken] = React.useState('')
+    const [token, setToken] = React.useState('123')
 
     return (
         <View style={styles.header}>
@@ -17,7 +17,9 @@ const Header = ({navigation}) => {
             <View style={styles.headerLinksBlock}>
                 {token ?
                     <View style={styles.headerLinks}>
-                        <Ionicons name="add-outline" size={36} color="black" style={{marginRight: 15}}/>
+                        <TouchableOpacity onPress={() => navigation.navigate('AddPosting')}>
+                            <Ionicons name="add-outline" size={36} color="black" style={{marginRight: 15}}/>
+                        </TouchableOpacity>
                         <Ionicons name="person-circle" size={32} color="black" style={{marginRight: 15}}/>
                         <Ionicons name="log-out-outline" size={32} color="black" style={{marginRight: 15}}/>
                     </View>

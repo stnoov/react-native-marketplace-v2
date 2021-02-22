@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {MainScreen, LoginScreen, RegisterScreen} from "./components";
+import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen} from "./components";
 import {StatusBar} from "expo-status-bar";
 
 const Stack = createStackNavigator();
@@ -25,6 +25,10 @@ export default function App() {
                 <Stack.Screen
                     name="Register"
                     component={RegisterScreen}
+                />
+                <Stack.Screen
+                    name="AddPosting"
+                    component={AddPostingScreen}
                 />
             </Stack.Navigator>
             <StatusBar hidden/>
