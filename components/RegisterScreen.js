@@ -2,20 +2,30 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Header from "./Header";
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
 
     const [email, setEmail] = React.useState('');
+    const [name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [confirmPassword, setConfirmPassword] = React.useState('');
 
     return (
         <View style={styles.mainContainer}>
             <Header navigation={navigation} />
             <View style={styles.body}>
-                <Text style={styles.screenTitle}>Log in to your account</Text>
+                <Text style={styles.screenTitle}>Create new account</Text>
                 <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>
                     <TextInput
                         style={{height: 20}}
-                        placeholder="E-mail"
+                        placeholder="Your name"
+                        onChangeText={name => setName(name)}
+                        defaultValue={name}
+                    />
+                </View>
+                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>
+                    <TextInput
+                        style={{height: 20}}
+                        placeholder="Your email"
                         onChangeText={email => setEmail(email)}
                         defaultValue={email}
                     />
@@ -24,17 +34,26 @@ const LoginScreen = ({ navigation }) => {
                     <TextInput
                         style={{height: 20}}
                         secureTextEntry={true}
-                        placeholder="Password"
+                        placeholder="Choose password"
                         onChangeText={password => setPassword(password)}
                         defaultValue={password}
                     />
                 </View>
-                <TouchableOpacity style={styles.loginButton}>
-                    <Text style={styles.loginButtonText}>Log in</Text>
+                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 10, borderColor: '#DEDEDE', borderRadius: 5}}>
+                    <TextInput
+                        style={{height: 20}}
+                        secureTextEntry={true}
+                        placeholder="Confirm password"
+                        onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+                        defaultValue={confirmPassword}
+                    />
+                </View>
+                <TouchableOpacity style={styles.registerButton}>
+                    <Text style={styles.registerButtonText}>Create account</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.createButton} onPress={() => navigation.navigate('Register')}>
-                    <Text style={styles.createButtonText}>Create BNS account</Text>
+                <TouchableOpacity style={styles.loginExisting} onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.loginExistingText}>Login to existing account</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.smallText}>Developed by Artem Sitnov ©</Text>
@@ -43,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
     );
 };
 
-export default LoginScreen;
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -58,7 +77,7 @@ const styles = StyleSheet.create({
     screenTitle: {
         fontSize: 24,
     },
-    loginButton: {
+    registerButton: {
         padding: 10,
         backgroundColor: '#F94F55',
         minWidth: 300,
@@ -68,12 +87,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    loginButtonText: {
+    registerButtonText: {
         fontSize: 20,
         color: '#fff',
         fontWeight: 'bold'
     },
-    createButton: {
+    loginExisting: {
         padding: 10,
         backgroundColor: '#6781AA',
         minWidth: 300,
@@ -83,8 +102,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    createButtonText: {
-        fontSize: 20,
+    loginExistingText: {
+        fontSize: 16,
         color: '#fff',
         fontWeight: 'bold'
     },
