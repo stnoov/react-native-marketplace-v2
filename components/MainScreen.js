@@ -1,52 +1,95 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Header from './Header'
 
-const MainScreen = ({ navigation }) => {
+const MainScreen = ({navigation}) => {
 
-    const [city, setCity] = React.useState('Oulu');
+    const [city, setCity] = React.useState('Finland');
     const [category, setCategory] = React.useState('All');
 
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation} />
+            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <View style={styles.sorting}>
-                <DropDownPicker
-                    items={[
-                        {label: 'All', value: 'All'},
-                        {label: 'Electronics', value: 'Electronics'},
-                        {label: 'Cars', value: 'Cars'},
-                        {label: 'Clothes and shoes', value: 'Clothes'},
-                        {label: 'Decor and furniture', value: 'Furniture'},
-                    ]}
-                    defaultValue={category}
-                    containerStyle={{height: 40, width: 150, marginLeft: 18, marginTop: 10}}
-                    style={{backgroundColor: '#fafafa'}}
-                    itemStyle={{
-                        justifyContent: 'flex-start',
-                    }}
-                    onChangeItem={item => setCategory(item.value)}
-                />
-                <DropDownPicker
-                    items={[
-                        {label: 'Oulu', value: 'Oulu'},
-                        {label: 'Helsinki', value: 'Helsinki'},
-                        {label: 'Tampere', value: 'Tampere'},
-                    ]}
-                    containerStyle={{height: 40, width: 150, marginLeft: 5, marginTop: 10}}
-                    style={{}}
-                    defaultValue={city}
-                    itemStyle={{
-                        justifyContent: 'flex-start'
-                    }}
-                    onChangeItem={item => setCity(item.value)}
-                />
+                    <DropDownPicker
+                        items={[
+                            {label: 'All', value: 'All'},
+                            {label: 'Electronics', value: 'Electronics'},
+                            {label: 'Cars', value: 'Cars'},
+                            {label: 'Clothes and shoes', value: 'Clothes'},
+                            {label: 'Decor and furniture', value: 'Furniture'},
+                        ]}
+                        defaultValue={category}
+                        containerStyle={{height: 40, width: 150, marginLeft: 18, marginTop: 10}}
+                        style={{backgroundColor: '#fafafa'}}
+                        itemStyle={{
+                            justifyContent: 'flex-start',
+                        }}
+                        onChangeItem={item => setCategory(item.value)}
+                    />
+                    <DropDownPicker
+                        items={[
+                            {label: 'Whole Finland', value: 'Finland'},
+                            {label: 'Oulu', value: 'Oulu'},
+                            {label: 'Helsinki', value: 'Helsinki'},
+                            {label: 'Tampere', value: 'Tampere'},
+                        ]}
+                        containerStyle={{height: 40, width: 150, marginLeft: 5, marginTop: 10}}
+                        style={{}}
+                        defaultValue={city}
+                        itemStyle={{
+                            justifyContent: 'flex-start'
+                        }}
+                        onChangeItem={item => setCity(item.value)}
+                    />
                     <TouchableOpacity style={styles.searchButton}>
                         <Text style={styles.searchButtonText}>Search</Text>
                     </TouchableOpacity>
                 </View>
+
+                <ScrollView style={styles.itemsList}>
+                    <View style={styles.currentSearch}>
+                        <Text style={{flex: 1}}>All items in Finland</Text>
+                        <Text style={styles.itemsFound}>3 items found</Text>
+                    </View>
+
+                    <View style={styles.listItemView}>
+                        <Image source={require('../assets/test_img.jpg')}
+                               style={{height: 100, width: 100, borderRadius: 5}}/>
+                        <View>
+                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
+                            <Text style={styles.itemCity}>Finland, Oulu</Text>
+                            <Text style={styles.itemPrice}>9€</Text>
+                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.listItemView}>
+                        <Image source={require('../assets/test_img.jpg')}
+                               style={{height: 100, width: 100, borderRadius: 5}}/>
+                        <View>
+                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
+                            <Text style={styles.itemCity}>Finland, Oulu</Text>
+                            <Text style={styles.itemPrice}>9€</Text>
+                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.listItemView}>
+
+                        <Image source={require('../assets/test_img.jpg')}
+                               style={{height: 100, width: 100, borderRadius: 5}}/>
+                        <View>
+                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
+                            <Text style={styles.itemCity}>Finland, Oulu</Text>
+                            <Text style={styles.itemPrice}>9€</Text>
+                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
+                        </View>
+                    </View>
+
+                </ScrollView>
             </View>
 
         </View>
@@ -83,4 +126,46 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold'
     },
+    currentSearch: {
+        padding: 10,
+        paddingLeft: 18,
+        borderBottomWidth: 1,
+        borderColor: '#DDDDDD',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    itemsFound: {
+
+    },
+    itemsList: {
+        flexDirection: 'column',
+        paddingTop: 10
+    },
+    listItemView: {
+        padding: 10,
+        paddingLeft: 18,
+        borderBottomWidth: 1,
+        borderColor: '#DDDDDD',
+        flexDirection: 'row'
+    },
+    itemListTitle: {
+        padding: 5,
+        paddingBottom: 0,
+    },
+    itemCity: {
+        fontSize: 12,
+        paddingTop: 0,
+        padding: 5
+    },
+    itemPrice: {
+        fontSize: 18,
+        padding: 5
+    },
+    itemPostedOn: {
+        fontSize: 13,
+        padding: 5,
+        paddingBottom: 0,
+        paddingTop: 0
+    }
 })
