@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { MainScreen } from "./components";
+import { MainScreen,LoginScreen } from "./components";
 import {StatusBar} from "expo-status-bar";
 
 const Stack = createStackNavigator();
@@ -15,9 +15,13 @@ export default function App() {
             }}
         >
           <Stack.Screen
-              name="Home"
+              name="Main"
               component={MainScreen}
           />
+            <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+            />
         </Stack.Navigator>
         <StatusBar hidden />
       </NavigationContainer>

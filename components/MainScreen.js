@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './Header'
 
-const MainScreen = () => {
+const MainScreen = ({ navigation }) => {
     return (
         <View style={styles.mainContainer}>
-            <Header />
+            <Header navigation={navigation} />
             <Text>Hello, this is main screen</Text>
         </View>
     );

@@ -1,26 +1,31 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Ionicons} from "@expo/vector-icons";
 
-const Header = () => {
+const Header = ({navigation}) => {
 
     const [token, setToken] = React.useState('')
 
     return (
         <View style={styles.header}>
             <View style={styles.headerLogo}>
-                <Text style={styles.headerLogoText}>BNS</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+                    <Text style={styles.headerLogoText}>BNS</Text>
+                </TouchableOpacity>
             </View>
+
             <View style={styles.headerLinksBlock}>
                 {token ?
                     <View style={styles.headerLinks}>
-                        <Ionicons name="add-outline" size={32} color="black" style={{marginRight: 15}}/>
+                        <Ionicons name="add-outline" size={36} color="black" style={{marginRight: 15}}/>
                         <Ionicons name="person-circle" size={32} color="black" style={{marginRight: 15}}/>
                         <Ionicons name="log-out-outline" size={32} color="black" style={{marginRight: 15}}/>
                     </View>
                     :
                     <View style={styles.headerLinks}>
-                        <Ionicons name="log-in-outline" size={32} color="black" style={{marginRight: 15}}/>
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                            <Ionicons name="log-in-outline" size={32} color="black" style={{marginRight: 15}}/>
+                        </TouchableOpacity>
                     </View>
                 }
 
@@ -38,6 +43,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FAFAFA',
         width: '100%',
         borderBottomWidth: 1,
+        borderColor: '#DDDDDD'
     },
     headerLogo: {
         flexDirection: 'column',
