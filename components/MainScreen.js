@@ -55,7 +55,15 @@ const MainScreen = ({navigation}) => {
                         <Text style={styles.itemsFound}>3 items found</Text>
                     </View>
 
-                    <View style={styles.listItemView}>
+                    <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
+                        item: {
+                            title: 'Iittala Kastehelmi harmaa tuikkulyhty 64mm',
+                            city: 'Oulu',
+                            postedOn: 'Today at 15:48',
+                            seller: 'Artem',
+                            sellerEmail: 'student@oamk.fi'
+                        }
+                    })}>
                         <Image source={require('../assets/test_img.jpg')}
                                style={{height: 100, width: 100, borderRadius: 5}}/>
                         <View>
@@ -64,7 +72,7 @@ const MainScreen = ({navigation}) => {
                             <Text style={styles.itemPrice}>9€</Text>
                             <Text style={styles.itemPostedOn}>Today at 15:48</Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={styles.listItemView}>
                         <Image source={require('../assets/test_img.jpg')}
