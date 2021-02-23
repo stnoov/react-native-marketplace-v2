@@ -20,7 +20,10 @@ const Header = ({navigation}) => {
                         <TouchableOpacity onPress={() => navigation.navigate('AddPosting')}>
                             <Ionicons name="add-outline" size={36} color="black" style={{marginRight: 15}}/>
                         </TouchableOpacity>
-                        <Ionicons name="person-circle" size={32} color="black" style={{marginRight: 15}}/>
+                        <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+                            <Ionicons name="person-circle" size={32} color="black" style={{marginRight: 15}}/>
+                        </TouchableOpacity>
+
                         <Ionicons name="log-out-outline" size={32} color="black" style={{marginRight: 15}}/>
                     </View>
                     :

@@ -143,9 +143,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    itemsFound: {
-
-    },
     itemsList: {
         flexDirection: 'column',
         paddingTop: 10

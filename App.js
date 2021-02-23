@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen, SingleItemScreen} from "./components";
+import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen, SingleItemScreen, UserScreen} from "./components";
 import {StatusBar} from "expo-status-bar";
 
 const Stack = createStackNavigator();
@@ -33,6 +33,10 @@ export default function App() {
                 <Stack.Screen
                     name="SingleItem"
                     component={SingleItemScreen}
+                />
+                <Stack.Screen
+                    name="Account"
+                    component={UserScreen}
                 />
             </Stack.Navigator>
             <StatusBar hidden/>
