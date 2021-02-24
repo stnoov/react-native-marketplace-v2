@@ -13,10 +13,13 @@ const RegisterScreen = ({navigation}) => {
     const handleRegister = () => {
         AuthService.register(name, email, password)
             .then((response) => {
-                alert(response)
-                navigation.navigate('Login')
+                if(response === 1) {
+                    alert(response)
+                    navigation.navigate('Login')
+                } else {
+                    alert('This email is already registered')
+                }
             }).catch((err) => {
-            alert('This email is already registered')
             console.log(err)
         })
     }

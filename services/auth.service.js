@@ -9,7 +9,7 @@ const register = (name, email, password) => {
         name: name,
         password: password
     }).then(() => {
-        return 'Account was created. You can now log in!'
+        return 1
     }).catch((err) => console.log(err))
 };
 
