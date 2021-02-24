@@ -4,7 +4,7 @@ import {Ionicons} from "@expo/vector-icons";
 
 const Header = ({navigation}) => {
 
-    const [token, setToken] = React.useState('123')
+    const [token, setToken] = React.useState('')
 
     return (
         <View style={styles.header}>

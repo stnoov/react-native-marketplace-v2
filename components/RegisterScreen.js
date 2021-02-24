@@ -1,20 +1,40 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import Header from "./Header";
+import AuthService from "../services/auth.service";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({navigation}) => {
 
     const [email, setEmail] = React.useState('');
     const [name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
 
+    const handleRegister = () => {
+        AuthService.register(name, email, password)
+            .then((response) => {
+                alert(response)
+                navigation.navigate('Login')
+            }).catch((err) => {
+            alert('This email is already registered')
+            console.log(err)
+        })
+    }
+
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation} />
+            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <Text style={styles.screenTitle}>Create new account</Text>
-                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>
+                <View style={{
+                    padding: 10,
+                    backgroundColor: 'transparent',
+                    minWidth: 300,
+                    borderWidth: 2,
+                    marginTop: 20,
+                    borderColor: '#DEDEDE',
+                    borderRadius: 5
+                }}>
                     <TextInput
                         style={{height: 20}}
                         placeholder="Your name"
@@ -22,7 +42,15 @@ const RegisterScreen = ({ navigation }) => {
                         defaultValue={name}
                     />
                 </View>
-                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>
+                <View style={{
+                    padding: 10,
+                    backgroundColor: 'transparent',
+                    minWidth: 300,
+                    borderWidth: 2,
+                    marginTop: 20,
+                    borderColor: '#DEDEDE',
+                    borderRadius: 5
+                }}>
                     <TextInput
                         style={{height: 20}}
                         placeholder="Your email"
@@ -30,7 +58,15 @@ const RegisterScreen = ({ navigation }) => {
                         defaultValue={email}
                     />
                 </View>
-                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 10, borderColor: '#DEDEDE', borderRadius: 5}}>
+                <View style={{
+                    padding: 10,
+                    backgroundColor: 'transparent',
+                    minWidth: 300,
+                    borderWidth: 2,
+                    marginTop: 10,
+                    borderColor: '#DEDEDE',
+                    borderRadius: 5
+                }}>
                     <TextInput
                         style={{height: 20}}
                         secureTextEntry={true}
@@ -39,7 +75,15 @@ const RegisterScreen = ({ navigation }) => {
                         defaultValue={password}
                     />
                 </View>
-                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 10, borderColor: '#DEDEDE', borderRadius: 5}}>
+                <View style={{
+                    padding: 10,
+                    backgroundColor: 'transparent',
+                    minWidth: 300,
+                    borderWidth: 2,
+                    marginTop: 10,
+                    borderColor: '#DEDEDE',
+                    borderRadius: 5
+                }}>
                     <TextInput
                         style={{height: 20}}
                         secureTextEntry={true}
@@ -48,7 +92,7 @@ const RegisterScreen = ({ navigation }) => {
                         defaultValue={confirmPassword}
                     />
                 </View>
-                <TouchableOpacity style={styles.registerButton}>
+                <TouchableOpacity style={styles.registerButton} onPress={() => handleRegister()}>
                     <Text style={styles.registerButtonText}>Create account</Text>
                 </TouchableOpacity>
 
