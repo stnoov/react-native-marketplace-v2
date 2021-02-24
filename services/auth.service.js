@@ -1,5 +1,6 @@
 import axios from "axios";
 import deviceStorage from "./device-storage";
+import { AsyncStorage } from 'react-native';
 
 const API_URL = "http://192.168.1.32:8080/";
 
@@ -19,11 +20,20 @@ const login = (email, password) => {
         password: password
     }).then((response) => {
         deviceStorage.saveItem("id_token", response.data.accessToken)
+        return 1
+    }).catch((err) => {
+        console.log(err)
+        return 0
     })
 };
+
+const logout = () => {
+    AsyncStorage.removeItem("id_token");
+}
 
 
 export default {
     register,
-    login
+    login,
+    logout
 };

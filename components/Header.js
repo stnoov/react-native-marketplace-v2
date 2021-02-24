@@ -1,10 +1,29 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Ionicons} from "@expo/vector-icons";
+import {AsyncStorage} from 'react-native';
+import AuthService from "../services/auth.service";
 
 const Header = ({navigation}) => {
 
     const [token, setToken] = React.useState('')
+
+    React.useEffect(() => {
+        AsyncStorage.getItem('id_token').then((token) => {
+            if (token) {
+                console.log('set token')
+                setToken(token)
+
+            }
+        })
+    }, [])
+
+    const handleLogout = () => {
+        AuthService.logout()
+        setToken('')
+        navigation.navigate('Main')
+
+    }
 
     return (
         <View style={styles.header}>
@@ -23,8 +42,9 @@ const Header = ({navigation}) => {
                         <TouchableOpacity onPress={() => navigation.navigate('Account')}>
                             <Ionicons name="person-circle" size={32} color="black" style={{marginRight: 15}}/>
                         </TouchableOpacity>
-
-                        <Ionicons name="log-out-outline" size={32} color="black" style={{marginRight: 15}}/>
+                        <TouchableOpacity onPress={() => handleLogout()}>
+                            <Ionicons name="log-out-outline" size={32} color="black" style={{marginRight: 15}}/>
+                        </TouchableOpacity>
                     </View>
                     :
                     <View style={styles.headerLinks}>

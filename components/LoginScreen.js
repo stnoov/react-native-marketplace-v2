@@ -1,11 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+
 import Header from "./Header";
+
+import AuthService from "../services/auth.service";
 
 const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
+    const handleLogin = () => {
+        AuthService.login(email, password)
+            .then((response) => {
+                if(response === 1) {
+                    navigation.navigate('Main')
+                } else if(response === 0) {
+                    alert('Wrong email or password')
+                }
+            })
+            .catch((err) => console.log(err))
+    }
 
     return (
         <View style={styles.mainContainer}>
@@ -29,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
                         defaultValue={password}
                     />
                 </View>
-                <TouchableOpacity style={styles.loginButton}>
+                <TouchableOpacity style={styles.loginButton} onPress={() => handleLogin()}>
                     <Text style={styles.loginButtonText}>Log in</Text>
                 </TouchableOpacity>
 
