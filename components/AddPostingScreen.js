@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Button, ScrollView} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
-import Header from "./Header";
+import * as ImagePicker from 'expo-image-picker'
 
 const AddPostingScreen = ({ navigation }) => {
 
@@ -10,10 +10,37 @@ const AddPostingScreen = ({ navigation }) => {
     const [price, setPrice] = React.useState('')
     const [category, setCategory] = React.useState('');
     const [city, setCity] = React.useState('Oulu');
-    const [deliveryType, setDeliveryType] = React.useState('Pickup')
+    const [deliveryType, setDeliveryType] = React.useState('Pickup');
+    const [image, setImage] = React.useState(null);
 
+
+    React.useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Sorry, we need camera roll permissions to make this work!');
+                }
+            }
+        })();
+    }, []);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+    };
     return (
-        <View style={styles.mainContainer}>
+        <ScrollView style={styles.mainContainer}>
             <View style={styles.body}>
                 <Text style={styles.screenTitle}>Add new posting</Text>
                 <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>
@@ -33,6 +60,43 @@ const AddPostingScreen = ({ navigation }) => {
 
                     />
                 </View>
+
+                <View style={{ flex: 1, minWidth: 300, marginTop: 10 }}>
+                    <Button title="Pick an image from camera roll" onPress={pickImage} />
+                    {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} />}
+                </View>
+
+                <View style={{flexDirection: 'row'}}>
+                    <DropDownPicker
+                        items={[
+                            {label: 'Oulu', value: 'Oulu'},
+                            {label: 'Helsinki', value: 'Helsinki'},
+                            {label: 'Tampere', value: 'Tampere'},
+                        ]}
+                        containerStyle={{height: 50, width: 145}}
+                        style={{marginTop: 10}}
+                        defaultValue={city}
+                        itemStyle={{
+                            justifyContent: 'flex-start'
+                        }}
+                        onChangeItem={item => setCity(item.value)}
+                    />
+
+                    <DropDownPicker
+                        items={[
+                            {label: 'Pickup', value: 'Pickup'},
+                            {label: 'Shipping', value: 'Shipping'},
+                        ]}
+                        containerStyle={{height: 50, width: 145, marginLeft: 10}}
+                        style={{marginTop: 10}}
+                        defaultValue={deliveryType}
+                        itemStyle={{
+                            justifyContent: 'flex-start'
+                        }}
+                        onChangeItem={item => setDeliveryType(item.value)}
+                    />
+                </View>
+
                 <DropDownPicker
                     items={[
                         {label: 'Electronics', value: 'Electronics'},
@@ -50,12 +114,6 @@ const AddPostingScreen = ({ navigation }) => {
                 <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 10, borderColor: '#DEDEDE', borderRadius: 5}}>
                     <TextInput
                         style={{height: 20}}
-                        placeholder="Images"
-                    />
-                </View>
-                <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 10, borderColor: '#DEDEDE', borderRadius: 5}}>
-                    <TextInput
-                        style={{height: 20}}
                         placeholder="Price"
                         onChangeText={price => setPrice(price)}
                         defaultValue={price}
@@ -63,39 +121,15 @@ const AddPostingScreen = ({ navigation }) => {
                     />
                 </View>
 
-                <DropDownPicker
-                    items={[
-                        {label: 'Oulu', value: 'Oulu'},
-                        {label: 'Helsinki', value: 'Helsinki'},
-                        {label: 'Tampere', value: 'Tampere'},
-                    ]}
-                    containerStyle={{height: 50, width: 300}}
-                    style={{marginTop: 10}}
-                    defaultValue={city}
-                    itemStyle={{
-                        justifyContent: 'flex-start'
-                    }}
-                    onChangeItem={item => setCity(item.value)}
-                />
 
-                <DropDownPicker
-                    items={[
-                        {label: 'Pickup', value: 'Pickup'},
-                        {label: 'Shipping', value: 'Shipping'},
-                    ]}
-                    containerStyle={{height: 50, width: 300}}
-                    style={{marginTop: 10}}
-                    defaultValue={deliveryType}
-                    itemStyle={{
-                        justifyContent: 'flex-start'
-                    }}
-                    onChangeItem={item => setDeliveryType(item.value)}
-                />
+
+
+
                 <TouchableOpacity style={styles.registerButton}>
                     <Text style={styles.registerButtonText}>Submit</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

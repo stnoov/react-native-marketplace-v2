@@ -13,7 +13,7 @@ const RegisterScreen = ({navigation}) => {
         AuthService.register(name, email, password)
             .then((response) => {
                 if(response === 1) {
-                    alert(response)
+                    alert('Account was created. You can low log in!')
                     navigation.navigate('Login')
                 } else {
                     alert('This email is already registered')
