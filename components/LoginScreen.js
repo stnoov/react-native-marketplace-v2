@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 
 import AuthService from "../services/auth.service";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({navigation, route}) => {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -12,9 +12,10 @@ const LoginScreen = ({ navigation }) => {
     const handleLogin = () => {
         AuthService.login(email, password)
             .then((response) => {
-                if(response === 1) {
+                if(response !== 0) {
                     navigation.navigate('Main')
-                } else if(response === 0) {
+                    route.params.setUser(response)
+                } else {
                     alert('Wrong email or password')
                 }
             })

@@ -3,16 +3,23 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Ionicons} from "@expo/vector-icons";
 import AuthService from "../services/auth.service";
 
-const Header = ({navigation}) => {
+const Header = ({navigation, options}) => {
+
 
     const [token, setToken] = React.useState('')
 
+    React.useEffect(() => {
+        if(options.user) {
+            setToken(options.user.accessToken)
+            console.log('token is set')
+        }
+    }, [options.user])
 
     const handleLogout = () => {
         AuthService.logout()
         setToken('')
+        options.setUser('')
         navigation.navigate('Main')
-
     }
 
     return (

@@ -20,7 +20,7 @@ const login = (email, password) => {
         password: password
     }).then((response) => {
         deviceStorage.saveItem("user", (response.data))
-        return 1
+        return response.data
     }).catch((err) => {
         console.log(err)
         return 0
