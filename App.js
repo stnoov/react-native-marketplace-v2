@@ -3,15 +3,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen, SingleItemScreen, UserScreen} from "./components";
 import {StatusBar} from "expo-status-bar";
+import Header from "./components/Header";
 
 const Stack = createStackNavigator();
 
 export default function App() {
+
     return (
         <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false
+                    header: ({navigation}) => <Header navigation={navigation}/>
                 }}
             >
                 <Stack.Screen

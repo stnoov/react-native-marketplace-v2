@@ -1,22 +1,12 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Ionicons} from "@expo/vector-icons";
-import {AsyncStorage} from 'react-native';
 import AuthService from "../services/auth.service";
 
 const Header = ({navigation}) => {
 
     const [token, setToken] = React.useState('')
 
-    React.useEffect(() => {
-        AsyncStorage.getItem('id_token').then((token) => {
-            if (token) {
-                console.log('set token')
-                setToken(token)
-
-            }
-        })
-    }, [])
 
     const handleLogout = () => {
         AuthService.logout()

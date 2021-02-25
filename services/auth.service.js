@@ -19,7 +19,7 @@ const login = (email, password) => {
         email: email,
         password: password
     }).then((response) => {
-        deviceStorage.saveItem("id_token", response.data.accessToken)
+        deviceStorage.saveItem("user", (response.data))
         return 1
     }).catch((err) => {
         console.log(err)

@@ -1,16 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import Header from './Header'
 
 const MainScreen = ({navigation}) => {
 
     const [city, setCity] = React.useState('Finland');
     const [category, setCategory] = React.useState('All');
 
+
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <View style={styles.sorting}>
                     <DropDownPicker

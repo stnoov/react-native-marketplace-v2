@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-import Header from "./Header";
 
 import AuthService from "../services/auth.service";
 
@@ -24,7 +23,6 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation} />
             <View style={styles.body}>
                 <Text style={styles.screenTitle}>Log in to your account</Text>
                 <View style={{padding: 10, backgroundColor: 'transparent', minWidth: 300, borderWidth: 2, marginTop: 20, borderColor: '#DEDEDE', borderRadius: 5}}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
-import Header from "./Header";
 import AuthService from "../services/auth.service";
 
 const RegisterScreen = ({navigation}) => {
@@ -26,7 +25,6 @@ const RegisterScreen = ({navigation}) => {
 
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <Text style={styles.screenTitle}>Create new account</Text>
                 <View style={{

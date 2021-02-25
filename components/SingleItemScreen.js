@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from "./Header";
 import {StyleSheet, View, Text} from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import {Ionicons} from "@expo/vector-icons";
@@ -13,7 +12,6 @@ const SingleItemScreen = ({ navigation, route }) => {
     ])
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <SliderBox
                     images={images}

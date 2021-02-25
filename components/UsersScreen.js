@@ -1,11 +1,9 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import Header from "./Header";
 
 const UserScreen = ({navigation}) => {
     return (
         <View style={styles.mainContainer}>
-            <Header navigation={navigation}/>
             <View style={styles.body}>
                 <View style={styles.main}>
                     <Text style={styles.title}>Logged in as User</Text>
