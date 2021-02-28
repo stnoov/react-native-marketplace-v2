@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen, SingleItemScreen, UserScreen} from "./components";
+import {MainScreen, LoginScreen, RegisterScreen, AddPostingScreen, SingleItemScreen, UserScreen, EditPostingScreen} from "./components";
 import {StatusBar} from "expo-status-bar";
 import Header from "./components/Header";
 import {AsyncStorage} from "react-native";
@@ -50,6 +50,11 @@ export default function App() {
                 <Stack.Screen
                     name="Account"
                     component={UserScreen}
+                    initialParams={{ user: user }}
+                />
+                <Stack.Screen
+                    name="EditPosting"
+                    component={EditPostingScreen}
                     initialParams={{ user: user }}
                 />
             </Stack.Navigator>

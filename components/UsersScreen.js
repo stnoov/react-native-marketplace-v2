@@ -54,6 +54,7 @@ const UserScreen = ({navigation, route}) => {
                                                                  item: {
                                                                      title: element.title,
                                                                      description: element.description,
+                                                                     category: element.category,
                                                                      city: element.location,
                                                                      images: element.images,
                                                                      postedOn: element.createdAt,
@@ -67,7 +68,16 @@ const UserScreen = ({navigation, route}) => {
                                             <Text style={styles.itemListTitle}>{element.title}</Text>
                                             <Text style={styles.itemPrice}>{element.price}€</Text>
                                             <View style={styles.buttonsBlock}>
-                                                <TouchableOpacity style={styles.editButton}>
+                                                <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditPosting', {
+                                                    item: {
+                                                        title: element.title,
+                                                        description: element.description,
+                                                        city: element.location,
+                                                        images: element.images,
+                                                        delivery_type: element.delivery_type,
+                                                        price: element.price
+                                                    }
+                                                })}>
                                                     <Text style={styles.editButtonText}>Edit</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity style={styles.deleteButton} onPress={() => deleteItem(element.id)}>
