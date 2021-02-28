@@ -68,11 +68,11 @@ const MainScreen = ({navigation}) => {
 
                 <ScrollView style={styles.itemsList}>
                     <View style={styles.currentSearch}>
-                        <Text style={{flex: 1}}>All items in Finland</Text>
+                        <Text style={{flex: 1}}>{category} in {city}</Text>
                         <Text style={styles.itemsFound}>{items.length} items found</Text>
                     </View>
 
-                    {items ?
+                    {items.length > 0 ?
                         items.map((element, index) => {
                             return <TouchableOpacity key={index} style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
                                 item: {
