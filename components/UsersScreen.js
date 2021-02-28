@@ -27,8 +27,8 @@ const UserScreen = ({navigation, route}) => {
             headers: {
                 'x-access-token': route.params.user.accessToken
             }
-        }).then((response) => {
-            setItems(response.data.message)
+        }).then(() => {
+            updateItems()
         })
     }
 
