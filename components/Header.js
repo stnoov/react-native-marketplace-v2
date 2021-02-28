@@ -9,10 +9,8 @@ const Header = ({navigation, options}) => {
     const [token, setToken] = React.useState('')
 
     React.useEffect(() => {
-        if(options.user) {
             setToken(options.user.accessToken)
             console.log('token is set')
-        }
     }, [options.user])
 
     const handleLogout = () => {
