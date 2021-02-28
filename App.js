@@ -41,6 +41,7 @@ export default function App() {
                 <Stack.Screen
                     name="AddPosting"
                     component={AddPostingScreen}
+                    initialParams={{ user: user }}
                 />
                 <Stack.Screen
                     name="SingleItem"

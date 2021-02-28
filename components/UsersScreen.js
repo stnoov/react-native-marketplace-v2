@@ -1,7 +1,16 @@
 import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import axios from "axios";
 
 const UserScreen = ({navigation}) => {
+
+    const [items, setItems] = React.useState()
+    React.useEffect(() => {
+        axios.get("http://192.168.1.32:8080/api/postings/get_postings").then(async (response) => {
+            await setItems(response.data.message)
+            console.log(items)
+        })
+    }, [])
     return (
         <View style={styles.mainContainer}>
             <View style={styles.body}>
@@ -12,30 +21,35 @@ const UserScreen = ({navigation}) => {
                 <Text style={{fontSize: 18, fontWeight: 'bold'}}>Your postings</Text>
                 <ScrollView style={styles.itemsList}>
                     <View>
-                    <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
-                        item: {
-                            title: 'Iittala Kastehelmi harmaa tuikkulyhty 64mm',
-                            city: 'Oulu',
-                            postedOn: 'Today at 15:48',
-                            seller: 'Artem',
-                            sellerEmail: 'student@oamk.fi'
-                        }
-                    })}>
-                        <Image source={require('../assets/test_img.jpg')}
-                               style={{height: 80, width: 80, borderRadius: 5}}/>
-                        <View>
-                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                            <Text style={styles.itemPrice}>9€</Text>
-                            <View style={styles.buttonsBlock}>
-                                <TouchableOpacity style={styles.editButton}>
-                                    <Text style={styles.editButtonText}>Edit</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.deleteButton}>
-                                    <Text style={styles.deleteButtonText}>Delete</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                        {items ?
+                        items.map((element) => {
+                            return <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
+                                item: {
+                                    title: element.title,
+                                    city: element.location,
+                                    postedOn: element.createdAt,
+                                    seller: element.seller.name,
+                                    sellerEmail: element.seller.email
+                                }
+                            })}>
+                                <Image source={{uri: element.images}}
+                                       style={{height: 80, width: 80, borderRadius: 5}}/>
+                                <View>
+                                    <Text style={styles.itemListTitle}>{element.title}</Text>
+                                    <Text style={styles.itemPrice}>{element.price}€</Text>
+                                    <View style={styles.buttonsBlock}>
+                                        <TouchableOpacity style={styles.editButton}>
+                                            <Text style={styles.editButtonText}>Edit</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.deleteButton}>
+                                            <Text style={styles.deleteButtonText}>Delete</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        })
+                        : null}
+
 
                         <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
                             item: {

@@ -2,8 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Button, ScrollView} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import * as ImagePicker from 'expo-image-picker'
+import PostingService from '../services/postings.service'
 
-const AddPostingScreen = ({ navigation }) => {
+const AddPostingScreen = ({ navigation, route }) => {
 
     const [title, setTitle] = React.useState('');
     const [description, setDescription] = React.useState('')
@@ -12,7 +13,6 @@ const AddPostingScreen = ({ navigation }) => {
     const [city, setCity] = React.useState('Oulu');
     const [deliveryType, setDeliveryType] = React.useState('Pickup');
     const [image, setImage] = React.useState(null);
-
 
     React.useEffect(() => {
         (async () => {
@@ -31,14 +31,19 @@ const AddPostingScreen = ({ navigation }) => {
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
+            base64: true
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
-            setImage(result.uri);
+            setImage(result);
         }
     };
+
+    const handleSubmit = () => {
+        PostingService.addItem(route.params.user.accessToken, title, description, category, city, image.base64, price, deliveryType).then(() => {
+            console.log('submitted')
+        })
+    }
     return (
         <ScrollView style={styles.mainContainer}>
             <View style={styles.body}>
@@ -63,7 +68,7 @@ const AddPostingScreen = ({ navigation }) => {
 
                 <View style={{ flex: 1, minWidth: 300, marginTop: 10 }}>
                     <Button title="Pick an image from camera roll" onPress={pickImage} />
-                    {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} />}
+                    {image && <Image source={{ uri: image.uri }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} />}
                 </View>
 
                 <View style={{flexDirection: 'row'}}>
@@ -125,7 +130,7 @@ const AddPostingScreen = ({ navigation }) => {
 
 
 
-                <TouchableOpacity style={styles.registerButton}>
+                <TouchableOpacity style={styles.registerButton} onPress={() => handleSubmit()}>
                     <Text style={styles.registerButtonText}>Submit</Text>
                 </TouchableOpacity>
             </View>
