@@ -2,31 +2,36 @@ import React from 'react';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 
-const UserScreen = ({navigation}) => {
+const UserScreen = ({navigation, route}) => {
 
     const [items, setItems] = React.useState()
     React.useEffect(() => {
-        axios.get("http://192.168.1.32:8080/api/postings/get_postings").then(async (response) => {
-            await setItems(response.data.message)
-            console.log(items)
+        axios.get("http://192.168.1.32:8080/api/postings/get_users_postings", {
+            headers: {
+                'x-access-token': route.params.user.accessToken
+            }
+        }).then((response) => {
+            setItems(response.data.message)
         })
     }, [])
     return (
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <View style={styles.main}>
-                    <Text style={styles.title}>Logged in as User</Text>
+                    <Text style={styles.title}>Logged in as {route.params.user.name}</Text>
                 </View>
             <View style={styles.postings}>
                 <Text style={{fontSize: 18, fontWeight: 'bold'}}>Your postings</Text>
                 <ScrollView style={styles.itemsList}>
                     <View>
                         {items ?
-                        items.map((element) => {
-                            return <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
+                        items.map((element, index) => {
+                            return <TouchableOpacity key={index} style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
                                 item: {
                                     title: element.title,
+                                    description: element.description,
                                     city: element.location,
+                                    images: element.images,
                                     postedOn: element.createdAt,
                                     seller: element.seller.name,
                                     sellerEmail: element.seller.email
@@ -50,56 +55,6 @@ const UserScreen = ({navigation}) => {
                         })
                         : null}
 
-
-                        <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
-                            item: {
-                                title: 'Iittala Kastehelmi harmaa tuikkulyhty 64mm',
-                                city: 'Oulu',
-                                postedOn: 'Today at 15:48',
-                                seller: 'Artem',
-                                sellerEmail: 'student@oamk.fi'
-                            }
-                        })}>
-                            <Image source={require('../assets/test_img.jpg')}
-                                   style={{height: 80, width: 80, borderRadius: 5}}/>
-                            <View>
-                                <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                                <Text style={styles.itemPrice}>9€</Text>
-                                <View style={styles.buttonsBlock}>
-                                    <TouchableOpacity style={styles.editButton}>
-                                        <Text style={styles.editButtonText}>Edit</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.deleteButton}>
-                                        <Text style={styles.deleteButtonText}>Delete</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
-                            item: {
-                                title: 'Iittala Kastehelmi harmaa tuikkulyhty 64mm',
-                                city: 'Oulu',
-                                postedOn: 'Today at 15:48',
-                                seller: 'Artem',
-                                sellerEmail: 'student@oamk.fi'
-                            }
-                        })}>
-                            <Image source={require('../assets/test_img.jpg')}
-                                   style={{height: 80, width: 80, borderRadius: 5}}/>
-                            <View>
-                                <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                                <Text style={styles.itemPrice}>9€</Text>
-                                <View style={styles.buttonsBlock}>
-                                    <TouchableOpacity style={styles.editButton}>
-                                        <Text style={styles.editButtonText}>Edit</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.deleteButton}>
-                                        <Text style={styles.deleteButtonText}>Delete</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>

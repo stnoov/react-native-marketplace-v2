@@ -50,6 +50,7 @@ export default function App() {
                 <Stack.Screen
                     name="Account"
                     component={UserScreen}
+                    initialParams={{ user: user }}
                 />
             </Stack.Navigator>
             <StatusBar hidden/>

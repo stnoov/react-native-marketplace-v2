@@ -1,12 +1,30 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView, Image} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import axios from "axios";
 
 const MainScreen = ({navigation}) => {
 
     const [city, setCity] = React.useState('Finland');
     const [category, setCategory] = React.useState('All');
+    const [items, setItems] = React.useState([])
 
+    const getAllPostings = async () => {
+        await axios.get("http://192.168.1.32:8080/api/postings/get_postings").then((response) => {
+            setItems(response.data.message)
+        })
+    }
+    const getSortedPostings = async () => {
+        await axios.post("http://192.168.1.32:8080/api/postings/get_sorted_postings", {
+            location: city,
+            category: category
+        }).then((response) => {
+            setItems(response.data.message)
+        })
+    }
+    React.useEffect(() => {
+        getAllPostings()
+    }, [])
 
     return (
         <View style={styles.mainContainer}>
@@ -43,7 +61,7 @@ const MainScreen = ({navigation}) => {
                         }}
                         onChangeItem={item => setCity(item.value)}
                     />
-                    <TouchableOpacity style={styles.searchButton}>
+                    <TouchableOpacity style={styles.searchButton} onPress={() => getSortedPostings()}>
                         <Text style={styles.searchButtonText}>Search</Text>
                     </TouchableOpacity>
                 </View>
@@ -51,50 +69,33 @@ const MainScreen = ({navigation}) => {
                 <ScrollView style={styles.itemsList}>
                     <View style={styles.currentSearch}>
                         <Text style={{flex: 1}}>All items in Finland</Text>
-                        <Text style={styles.itemsFound}>3 items found</Text>
+                        <Text style={styles.itemsFound}>{items.length} items found</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
-                        item: {
-                            title: 'Iittala Kastehelmi harmaa tuikkulyhty 64mm',
-                            city: 'Oulu',
-                            postedOn: 'Today at 15:48',
-                            seller: 'Artem',
-                            sellerEmail: 'student@oamk.fi'
-                        }
-                    })}>
-                        <Image source={require('../assets/test_img.jpg')}
-                               style={{height: 100, width: 100, borderRadius: 5}}/>
-                        <View>
-                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                            <Text style={styles.itemCity}>Finland, Oulu</Text>
-                            <Text style={styles.itemPrice}>9€</Text>
-                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <View style={styles.listItemView}>
-                        <Image source={require('../assets/test_img.jpg')}
-                               style={{height: 100, width: 100, borderRadius: 5}}/>
-                        <View>
-                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                            <Text style={styles.itemCity}>Finland, Oulu</Text>
-                            <Text style={styles.itemPrice}>9€</Text>
-                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.listItemView}>
-
-                        <Image source={require('../assets/test_img.jpg')}
-                               style={{height: 100, width: 100, borderRadius: 5}}/>
-                        <View>
-                            <Text style={styles.itemListTitle}>Iittala Kastehelmi harmaa tuikkulyhty 64mm</Text>
-                            <Text style={styles.itemCity}>Finland, Oulu</Text>
-                            <Text style={styles.itemPrice}>9€</Text>
-                            <Text style={styles.itemPostedOn}>Today at 15:48</Text>
-                        </View>
-                    </View>
+                    {items ?
+                        items.map((element, index) => {
+                            return <TouchableOpacity key={index} style={styles.listItemView} onPress={() => navigation.navigate('SingleItem', {
+                                item: {
+                                    title: element.title,
+                                    description: element.description,
+                                    city: element.location,
+                                    images: element.images,
+                                    postedOn: element.createdAt,
+                                    seller: element.seller.name,
+                                    sellerEmail: element.seller.email
+                                }
+                            })}>
+                                <Image source={{uri: element.images}}
+                                       style={{height: 100, width: 100, borderRadius: 5}}/>
+                                <View>
+                                    <Text style={styles.itemListTitle}>{element.title}</Text>
+                                    <Text style={styles.itemCity}>Finland, {element.location}</Text>
+                                    <Text style={styles.itemPrice}>{element.price}€</Text>
+                                    <Text style={styles.itemPostedOn}>{element.createdAt}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        })
+                        : null}
 
                 </ScrollView>
             </View>
