@@ -11,7 +11,6 @@ const Header = ({navigation, options}) => {
     React.useEffect(() => {
             if(options.user) {
                 setToken(options.user.accessToken)
-                console.log('token is set')
             } else {
                 setToken('')
             }

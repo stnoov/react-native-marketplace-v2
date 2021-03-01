@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Button, ScrollView} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
-import * as ImagePicker from 'expo-image-picker'
+import * as ImagePicker from 'expo-image-picker';
+import PostingService from '../services/postings.service'
 
 const EditPostingScreen = ({ navigation, route }) => {
 
@@ -14,6 +15,7 @@ const EditPostingScreen = ({ navigation, route }) => {
     const [city, setCity] = React.useState(item.city);
     const [deliveryType, setDeliveryType] = React.useState(item.delivery_type);
     const [image, setImage] = React.useState(item.images);
+    const [newImage, setNewImage] = React.useState(null)
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -25,15 +27,17 @@ const EditPostingScreen = ({ navigation, route }) => {
         });
 
         if (!result.cancelled) {
-            setImage(result);
+            setNewImage(result);
         }
     };
 
-    // const handleSubmit = () => {
-    //     PostingService.addItem(route.params.user.accessToken, title, description, category, city, image.base64, price, deliveryType).then(() => {
-    //         console.log('submitted')
-    //     })
-    // }
+    const handleSubmit = () => {
+        PostingService.editItem(route.params.user.accessToken, item.id, title, description, category, city, newImage.base64, price, deliveryType).then(() => {
+            alert('Posting was edited')
+            navigation.navigate('Main')
+        })
+
+    }
 
     return (
         <ScrollView style={styles.mainContainer}>
@@ -59,7 +63,8 @@ const EditPostingScreen = ({ navigation, route }) => {
 
                 <View style={{ flex: 1, minWidth: 300, marginTop: 10 }}>
                     <Button title="Pick an image from camera roll" onPress={pickImage} />
-                    {image && <Image source={{ uri: image }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} />}
+                    {image && !newImage ? <Image source={{ uri: image }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} /> : null}
+                    {newImage && <Image source={{ uri: newImage.uri }} style={{ width: 100, height: 100, marginTop: 10, alignSelf: 'center', borderRadius: 5 }} />}
                 </View>
 
                 <View style={{flexDirection: 'row'}}>

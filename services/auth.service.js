@@ -2,7 +2,7 @@ import axios from "axios";
 import deviceStorage from "./device-storage";
 import { AsyncStorage } from 'react-native';
 
-const API_URL = "http://192.168.1.32:8080/";
+const API_URL = "https://graded-exc-api.herokuapp.com/";
 
 const register = (name, email, password) => {
     return axios.post(API_URL + "api/auth/signup", {

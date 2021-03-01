@@ -21,7 +21,7 @@ const SingleItemScreen = ({ navigation, route }) => {
                         <Ionicons name="location-outline" size={18} color="black" style={{marginRight: 10}}/> {route.params.item.city}, Finland
                     </Text>
                     <Text style={styles.postedOn}>
-                        <Ionicons name="time-outline" size={18} color="black" style={{marginRight: 10}}/> Posted: {route.params.item.postedOn}
+                        <Ionicons name="time-outline" size={18} color="black" style={{marginRight: 10}}/> Posted: { new Date(route.params.item.postedOn).toUTCString().split(' ').slice(0, 4).join(' ')}
                     </Text>
                     <Text style={styles.seller}>
                         <Ionicons name="person-circle-outline" size={18} color="black" style={{marginRight: 10}}/> Seller: {route.params.item.seller}

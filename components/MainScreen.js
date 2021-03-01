@@ -10,12 +10,12 @@ const MainScreen = ({navigation}) => {
     const [items, setItems] = React.useState([])
 
     const getAllPostings = async () => {
-        await axios.get("http://192.168.1.32:8080/api/postings/get_postings").then((response) => {
+        await axios.get("https://graded-exc-api.herokuapp.com/api/postings/get_postings").then((response) => {
             setItems(response.data.message)
         })
     }
     const getSortedPostings = async () => {
-        await axios.post("http://192.168.1.32:8080/api/postings/get_sorted_postings", {
+        await axios.post("https://graded-exc-api.herokuapp.com/api/postings/get_sorted_postings", {
             location: city,
             category: category
         }).then((response) => {
@@ -91,7 +91,7 @@ const MainScreen = ({navigation}) => {
                                     <Text style={styles.itemListTitle}>{element.title}</Text>
                                     <Text style={styles.itemCity}>Finland, {element.location}</Text>
                                     <Text style={styles.itemPrice}>{element.price}€</Text>
-                                    <Text style={styles.itemPostedOn}>{element.createdAt}</Text>
+                                    <Text style={styles.itemPostedOn}>{ new Date(element.createdAt).toUTCString().split(' ').slice(0, 4).join(' ')}</Text>
                                 </View>
                             </TouchableOpacity>
                         })

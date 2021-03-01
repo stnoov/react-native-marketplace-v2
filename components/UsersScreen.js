@@ -11,7 +11,7 @@ const UserScreen = ({navigation, route}) => {
     }, [])
 
     const updateItems = () => {
-        axios.get("http://192.168.1.32:8080/api/postings/get_users_postings", {
+        axios.get("https://graded-exc-api.herokuapp.com/api/postings/get_users_postings", {
             headers: {
                 'x-access-token': route.params.user.accessToken
             }
@@ -21,15 +21,14 @@ const UserScreen = ({navigation, route}) => {
     }
 
     const deleteItem = (itemID) => {
-        axios.post("http://192.168.1.32:8080/api/postings/delete_posting", {
+        axios.post("https://graded-exc-api.herokuapp.com/api/postings/delete_posting", {
             id: itemID
         }, {
             headers: {
                 'x-access-token': route.params.user.accessToken
             }
-        }).then(() => {
-            updateItems()
         })
+        alert('Posting was deleted, please refresh your user page')
     }
 
     return (
@@ -70,6 +69,7 @@ const UserScreen = ({navigation, route}) => {
                                             <View style={styles.buttonsBlock}>
                                                 <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditPosting', {
                                                     item: {
+                                                        id: element.id,
                                                         title: element.title,
                                                         description: element.description,
                                                         city: element.location,

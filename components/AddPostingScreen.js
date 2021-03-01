@@ -40,9 +40,9 @@ const AddPostingScreen = ({ navigation, route }) => {
     };
 
     const handleSubmit = () => {
-        PostingService.addItem(route.params.user.accessToken, title, description, category, city, image.base64, price, deliveryType).then(() => {
-            console.log('submitted')
-        })
+        PostingService.addItem(route.params.user.accessToken, title, description, category, city, image.base64, price, deliveryType)
+        alert('Your post is submitted')
+        navigation.navigate('Main')
     }
     return (
         <ScrollView style={styles.mainContainer}>
